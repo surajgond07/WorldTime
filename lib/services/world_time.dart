@@ -7,6 +7,7 @@ class WorldTime {
   String time = ''; // the time in that location
   String flag; // url for an assets flat icon
   String url; // location url for the API endpoint
+  bool isDayTime = true; // tru of false is day time
 
   WorldTime({required this.location, required this.flag, required this.url});
 
@@ -29,6 +30,8 @@ class WorldTime {
       print('Now Edited Time is: $now');
 
       // formate time
+      // ternary operator
+      isDayTime = now.hour > 6 && now.hour < 20 ? true : false;
       time = DateFormat.jm()
           .format(now); // DateFormate function provide by intl package
     } catch (error) {
