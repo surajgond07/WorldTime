@@ -39,15 +39,15 @@ class _HomeState extends State<Home> {
 
     // Check if data is null or empty
     if (data == null || data!.isEmpty) {
-      // Set default location to Berlin
+      // Set default location to Kolkata
       data = {
         'location': 'Kolkata',
-        'time': '', // You can set a default time if needed
-        'isDayTime': true, // You can set a default day/night state if needed
-        'flag': 'india.png' // You can set a default flag if needed
+        'time': '', // set a default time if needed
+        'isDayTime': true, // set a default day/night state if needed
+        'flag': 'india.png' // set a default flag if needed
       };
 
-      // Optionally, you can fetch time data for Berlin here
+      // Optionally, fetch time data for Kolkata here
       // and update the 'time' property in the 'data' map asynchronously.
     }
 
@@ -74,35 +74,42 @@ class _HomeState extends State<Home> {
           child: SafeArea(
             child: Column(
               children: [
-                TextButton.icon(
-                  onPressed: () async {
-                    dynamic result =
-                        await Navigator.pushNamed(context, '/location');
-                    setState(() {
-                      if (result != null && result is Map<String, dynamic>) {
-                        data = {
-                          'time': result['time'],
-                          'location': result['location'],
-                          'isDayTime': result['isDayTime'],
-                          'flag': result['flag']
-                        };
-                      }
-                    });
-                  },
-                  icon: Icon(
-                    Icons.edit_location,
-                    color: Colors.grey[300],
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 94, 93, 93)
+                        .withOpacity(0.5), // Highlighted color
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                  label: Text(
-                    'Change Location',
-                    style: TextStyle(
-                      fontSize: 18.0,
+                  child: TextButton.icon(
+                    onPressed: () async {
+                      dynamic result =
+                          await Navigator.pushNamed(context, '/location');
+                      setState(() {
+                        if (result != null && result is Map<String, dynamic>) {
+                          data = {
+                            'time': result['time'],
+                            'location': result['location'],
+                            'isDayTime': result['isDayTime'],
+                            'flag': result['flag']
+                          };
+                        }
+                      });
+                    },
+                    icon: Icon(
+                      Icons.edit_location,
                       color: Colors.grey[300],
+                    ),
+                    label: Text(
+                      'Change Location',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.grey[300],
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 20.0,
+                  height: 35.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +117,7 @@ class _HomeState extends State<Home> {
                     Text(
                       location,
                       style: const TextStyle(
-                        fontSize: 28.0,
+                        fontSize: 35.0,
                         letterSpacing: 2.0,
                         color: Colors.white,
                       ),
@@ -125,6 +132,17 @@ class _HomeState extends State<Home> {
                   time,
                   style: const TextStyle(
                     fontSize: 66.0,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                // Output the time
+                const Text(
+                  'Developed by - Suraj Gond',
+                  style: TextStyle(
+                    fontSize: 16.0,
                     color: Colors.white,
                   ),
                 ),
