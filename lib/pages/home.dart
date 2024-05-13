@@ -11,81 +11,107 @@ class _HomeState extends State<Home> {
   late Map<String, dynamic> data = {}; // Declare data with explicit type
   @override
   Widget build(BuildContext context) {
-    // receiving actual argument of Map data
-    data = data.isNotEmpty
+    // Receiving actual argument of Map data
+    data = (data.isNotEmpty
         ? data
-        : ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        : ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?)!;
 
-    // set background
-    String bgImage = data['isDayTime'] ? 'day.png' : 'night.png';
-    Color? bgColor = data['isDayTime'] ? Colors.blue : Colors.indigo[700];
-    // print(data);
+    // Check if data is null or empty
+    if (data == null || data!.isEmpty) {
+      // Set default location to Berlin
+      data = {
+        'location': 'Kolkata',
+        'time': '', // You can set a default time if needed
+        'isDayTime': true, // You can set a default day/night state if needed
+        'flag': 'india.png' // You can set a default flag if needed
+      };
+
+      // Optionally, you can fetch time data for Berlin here
+      // and update the 'time' property in the 'data' map asynchronously.
+    }
+
+    // Extract data
+    String location = data!['location'] ?? 'Unknown Location';
+    String time = data!['time'] ?? 'Unknown Time';
+    bool isDayTime = data!['isDayTime'] ?? true;
+
+    // Set background
+    String bgImage = isDayTime ? 'day.png' : 'night.png';
+    Color? bgColor = isDayTime ? Colors.blue : Colors.indigo[700];
+
     return Scaffold(
-        backgroundColor: bgColor,
-        body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
+      backgroundColor: bgColor,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
             image: AssetImage('assets/$bgImage'),
             fit: BoxFit.cover,
-          )),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 120.0, 0, 0),
-            child: SafeArea(
-              child: Column(
-                children: [
-                  TextButton.icon(
-                    onPressed: () async {
-                      dynamic result =
-                          await Navigator.pushNamed(context, '/location');
-                      setState(() {
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 120.0, 0, 0),
+          child: SafeArea(
+            child: Column(
+              children: [
+                TextButton.icon(
+                  onPressed: () async {
+                    dynamic result =
+                        await Navigator.pushNamed(context, '/location');
+                    setState(() {
+                      if (result != null && result is Map<String, dynamic>) {
                         data = {
                           'time': result['time'],
                           'location': result['location'],
                           'isDayTime': result['isDayTime'],
                           'flag': result['flag']
                         };
-                      });
-                    },
-                    icon: Icon(
-                      Icons.edit_location,
+                      }
+                    });
+                  },
+                  icon: Icon(
+                    Icons.edit_location,
+                    color: Colors.grey[300],
+                  ),
+                  label: Text(
+                    'Change Location',
+                    style: TextStyle(
+                      fontSize: 18.0,
                       color: Colors.grey[300],
                     ),
-                    label: Text(
-                      'Change Location',
-                      style: TextStyle(fontSize: 18.0, color: Colors.grey[300]),
-                    ),
                   ),
-                  const SizedBox(
-                    height: 20.0,
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      location,
+                      style: const TextStyle(
+                        fontSize: 28.0,
+                        letterSpacing: 2.0,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                // Output the time
+                Text(
+                  time,
+                  style: const TextStyle(
+                    fontSize: 66.0,
+                    color: Colors.white,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        data['location'],
-                        style: const TextStyle(
-                          fontSize: 28.0,
-                          letterSpacing: 2.0,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  // output the time
-                  Text(
-                    data['time'],
-                    style: const TextStyle(
-                      fontSize: 66.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

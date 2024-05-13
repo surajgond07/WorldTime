@@ -13,7 +13,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
     WorldTime(url: 'America/New_York', location: 'New York', flag: 'usa.png'),
     WorldTime(url: 'Europe/London', location: 'London', flag: 'uk.png'),
     WorldTime(url: 'Asia/Kolkata', location: 'Kolkata', flag: 'india.png'),
-    WorldTime(url: 'Europe/Berlin', location: 'Athens', flag: 'greece.png'),
+    WorldTime(url: 'Europe/Berlin', location: 'Berlin', flag: 'germany.png'),
+    WorldTime(url: 'Europe/Athens', location: 'Athens', flag: 'greece.png'),
     WorldTime(url: 'Africa/Cairo', location: 'Cairo', flag: 'egypt.png'),
     WorldTime(url: 'Africa/Nairobi', location: 'Nairobi', flag: 'kenya.png'),
     WorldTime(url: 'America/Chicago', location: 'Chicago', flag: 'usa.png'),
@@ -41,7 +42,9 @@ class _ChooseLocationState extends State<ChooseLocation> {
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         title: const Text('Choose a Location',
-            style: TextStyle(color: Colors.white)),
+            style: TextStyle(
+              color: Colors.white,
+            )),
         centerTitle: true,
         elevation: 0,
         iconTheme: const IconThemeData(
