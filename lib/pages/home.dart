@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
         : ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?)!;
 
     // Check if data is null or empty
-    if (data == null || data!.isEmpty) {
+    if (data.isEmpty) {
       // Set default location to Kolkata
       data = {
         'location': 'Kolkata',
@@ -52,9 +52,9 @@ class _HomeState extends State<Home> {
     }
 
     // Extract data
-    String location = data!['location'] ?? 'Unknown Location';
-    String time = data!['time'] ?? 'Unknown Time';
-    bool isDayTime = data!['isDayTime'] ?? true;
+    String location = data['location'] ?? 'Unknown Location';
+    String time = data['time'] ?? 'Unknown Time';
+    bool isDayTime = data['isDayTime'] ?? true;
 
     // Set background
     String bgImage = isDayTime ? 'day.png' : 'night.png';

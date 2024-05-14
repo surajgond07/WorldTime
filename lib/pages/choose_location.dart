@@ -22,16 +22,31 @@ class _ChooseLocationState extends State<ChooseLocation> {
     WorldTime(url: 'Asia/Jakarta', location: 'Jakarta', flag: 'indonesia.png'),
   ];
 
+  // void updateTime(index) async {
+  //   WorldTime instance = locations[index];
+  //   await instance.getTime();
+  //   // navigate to home screen
+  //   Navigator.pop(context, {
+  //     'location': instance.location,
+  //     'flag': instance.flag,
+  //     'time': instance.time,
+  //     'isDayTime': instance.isDayTime,
+  //   });
+  // }
+
   void updateTime(index) async {
     WorldTime instance = locations[index];
     await instance.getTime();
-    // navigate to home screen
-    Navigator.pop(context, {
-      'location': instance.location,
-      'flag': instance.flag,
-      'time': instance.time,
-      'isDayTime': instance.isDayTime,
-    });
+
+    // Check if context is still valid before popping the navigator
+    if (mounted) {
+      Navigator.pop(context, {
+        'location': instance.location,
+        'flag': instance.flag,
+        'time': instance.time,
+        'isDayTime': instance.isDayTime,
+      });
+    }
   }
 
   @override

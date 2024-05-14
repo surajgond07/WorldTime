@@ -10,31 +10,25 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  // String time = 'loading';
-
-  // creating world time instance here
-  void setupWorldTime() async {
+  void setupWorldTime(BuildContext context) async {
     WorldTime instance =
         WorldTime(location: 'Kolkata', flag: 'india.png', url: 'Asia/Kolkata');
     await instance.getTime();
-    // navigate to the next page
-    Navigator.pushReplacementNamed(context, '/home', arguments: {
-      'location': instance.location,
-      'flag': instance.flag,
-      'time': instance.time,
-      'isDayTime': instance.isDayTime,
-    });
-
-    // set state rebuild and update the time
-    setState(() {
-      // time = instance.time;
-    });
+    // Navigate to the next page only if the widget is still mounted
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, '/home', arguments: {
+        'location': instance.location,
+        'flag': instance.flag,
+        'time': instance.time,
+        'isDayTime': instance.isDayTime,
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    setupWorldTime();
+    setupWorldTime(context); // Pass context to the method
   }
 
   @override

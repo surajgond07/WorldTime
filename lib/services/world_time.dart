@@ -34,7 +34,7 @@ class WorldTime {
       time = DateFormat.jm()
           .format(now); // Use DateFormat from intl package to format time
     } catch (error) {
-      print('Error fetching data: $error');
+      // print('Error fetching data: $error');
       time = "Could not get time data";
     }
   }
