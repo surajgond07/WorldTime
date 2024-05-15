@@ -7,23 +7,12 @@ class WorldTime {
   String time = ''; // the time in that location
   String flag; // url for an assets flat icon
   String url; // location url for the API endpoint
-  bool isDayTime = true; // true or false for day time
+  bool isDayTime = true; // tru of false is day time
 
   WorldTime({required this.location, required this.flag, required this.url});
 
   Future<void> getTime() async {
-    // Check for network connectivity
-    bool isConnected = await http.Client()
-        .get(Uri.parse('https://google.com'))
-        .then((response) => true)
-        .catchError((error) => false);
-
-    if (!isConnected) {
-      time = "No internet connection";
-      return;
-    }
-
-    // Make the request
+    //  make the request
     try {
       http.Response response = await http
           .get(Uri.parse('https://worldtimeapi.org/api/timezone/$url'));
@@ -45,8 +34,8 @@ class WorldTime {
       time = DateFormat.jm()
           .format(now); // Use DateFormat from intl package to format time
     } catch (error) {
-      // Handle other errors
-      time = "Could not get time data";
+      // print('Error fetching data: $error');
+      time = "No internet connection";
     }
   }
 }
